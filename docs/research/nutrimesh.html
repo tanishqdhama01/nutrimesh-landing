@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf5ee">
+  <meta name="description" content="NutriMesh — a household nutrition mesh: shared-pot calorie tracking, an AI meal logger, an optimisation engine and a 450-dish Indian nutrition catalogue.">
+  <title>NutriMesh — Household Nutrition Mesh</title>
+
+  <!-- Google Fonts: Sora, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Living Mesh Background -->
+  <canvas id="mesh-canvas"></canvas>
+  <div class="ambient-glow"></div>
+
+  <!-- ============================================================
+       APPLE iPHONE NOTCH / DYNAMIC ISLAND FLOATING NAVIGATION
+       ============================================================ -->
+  <header class="notch-wrapper" id="notch-wrapper">
+    <nav class="dynamic-island-notch" id="dynamic-island-notch" aria-label="Main Navigation">
+      <!-- Island Left: Apple Sensor Aperture & Brand -->
+      <div class="notch-left">
+        <a href="#" class="notch-brand" id="notch-brand">
+          <div class="notch-sensor" title="Live Household Mesh Status">
+            <span class="notch-sensor-lens"></span>
+            <span class="notch-live-indicator"></span>
+          </div>
+          <img src="assets/logo.png" alt="NutriMesh" class="notch-logo">
+          <span class="notch-title">NutriMesh</span>
+        </a>
+      </div>
+
+      <!-- Island Center: Segmented Navigation Pills -->
+      <div class="notch-center">
+        <ul class="notch-nav-list">
+          <li><a href="#problem" class="notch-nav-item" data-i18n="nav.problem">The Shared Pot</a></li>
+          <li><a href="#simulator" class="notch-nav-item" data-i18n="nav.simulator">Pot Simulator</a></li>
+          <li><a href="#features" class="notch-nav-item" data-i18n="nav.features">Pillars</a></li>
+          <li><a href="#catalogue" class="notch-nav-item" data-i18n="nav.catalogue">450+ Dishes</a></li>
+          <li><a href="#faq" class="notch-nav-item" data-i18n="nav.faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Island Right: Actions (Language, Theme, iOS Action Button) -->
+      <div class="notch-right">
+        <!-- Language Switcher Pill -->
+        <div class="lang-selector-wrapper">
+          <button class="notch-pill-btn lang-btn" id="lang-btn" aria-label="Select Language">
+            <span class="notch-lang-icon">🌐</span>
+            <span id="current-lang-code">EN</span>
+            <span class="notch-caret">▾</span>
+          </button>
+          <ul class="lang-dropdown notch-dropdown" id="lang-dropdown">
+            <li class="lang-item" data-lang="en"><span>English</span> <span class="lang-code">EN</span></li>
+            <li class="lang-item" data-lang="hi"><span>हिन्दी</span> <span class="lang-code">HI</span></li>
+            <li class="lang-item" data-lang="mr"><span>मराठी</span> <span class="lang-code">MR</span></li>
+            <li class="lang-item" data-lang="ta"><span>தமிழ்</span> <span class="lang-code">TA</span></li>
+            <li class="lang-item" data-lang="te"><span>తెలుగు</span> <span class="lang-code">TE</span></li>
+            <li class="lang-item" data-lang="bn"><span>বাংলা</span> <span class="lang-code">BN</span></li>
+            <li class="lang-item" data-lang="gu"><span>ગુજરાતી</span> <span class="lang-code">GU</span></li>
+            <li class="lang-item" data-lang="pa"><span>ਪੰਜਾਬੀ</span> <span class="lang-code">PA</span></li>
+          </ul>
+        </div>
+
+        <!-- Theme Toggle Pill -->
+        <button class="notch-pill-btn theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
+
+        <!-- Apple Style Action Button (Direct Link to Dashboard) -->
+        <a href="https://nutri-mesh-flow.base44.app" target="_blank" rel="noopener noreferrer" class="notch-action-btn" id="btn-launch-nav" data-i18n="nav.dashboard">
+          <span>Dashboard</span>
+          <span class="notch-action-arrow">↗</span>
+        </a>
+
+        <!-- Mobile Dynamic Island Trigger -->
+        <button class="notch-mobile-btn" id="mobile-menu-btn" aria-label="Toggle Island Menu">
+          <span class="notch-mobile-dot"></span>
+          <span class="notch-mobile-dot"></span>
+          <span class="notch-mobile-dot"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Expanded Island Drawer (Mobile & Compact View) -->
+    <div class="notch-expanded-drawer" id="mobile-menu">
+      <div class="drawer-header">
+        <span class="drawer-chip">Dynamic Island • Quick Navigation</span>
+      </div>
+      <div class="drawer-links">
+        <a href="#problem" class="drawer-link" data-i18n="nav.problem">The Shared Pot</a>
+        <a href="#simulator" class="drawer-link" data-i18n="nav.simulator">Pot Simulator</a>
+        <a href="#features" class="drawer-link" data-i18n="nav.features">Pillars</a>
+        <a href="#catalogue" class="drawer-link" data-i18n="nav.catalogue">450+ Dishes</a>
+        <a href="#faq" class="drawer-link" data-i18n="nav.faq">FAQ</a>
+      </div>
+      <div class="drawer-actions">
+        <a href="https://nutri-mesh-flow.base44.app" target="_blank" class="drawer-btn primary" data-i18n="nav.dashboard">Launch NutriMesh Dashboard ↗</a>
+        <a href="/dashboard/" target="_blank" class="drawer-btn secondary">Open Local Fixed Dashboard</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-pill-badge" id="hero-pill" data-i18n="hero.badge">
+          <span class="pulse-dot"></span> 🌿 India's 1st Household Nutrition Mesh • ICMR-NIN 2024 Calibrated
+        </div>
+        <h1 class="hero-headline" id="hero-headline" data-i18n="hero.title">
+          One Shared Pot. <br><span class="mesh-text-gradient">Individual Nourishment.</span>
+        </h1>
+        <p class="hero-subtext" id="hero-subtext" data-i18n="hero.sub">
+          Indian families cook in one handi, kadai, or pressure cooker. Western calorie apps make you cook 5 separate meals. NutriMesh calculates each family member's exact macros from the shared pot.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="https://nutri-mesh-flow.base44.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="hero-primary-cta" data-i18n="hero.cta_primary">
+            Launch NutriMesh Flow ↗
+          </a>
+          <a href="#simulator" class="btn btn-secondary" id="hero-secondary-cta" data-i18n="hero.cta_secondary">
+            Try Pot Simulator ↓
+          </a>
+        </div>
+
+        <div class="hero-trust-row">
+          <div class="trust-item">
+            <span class="trust-number">450+</span>
+            <span class="trust-label" data-i18n="hero.stat_dishes">Indian Dishes</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-number">100%</span>
+            <span class="trust-label" data-i18n="hero.stat_mesh">Shared-Pot Mesh</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-number">2024</span>
+            <span class="trust-label" data-i18n="hero.stat_guidelines">ICMR-NIN Aligned</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Representation with Interactive Chips -->
+      <div class="hero-visual-card">
+        <img src="assets/hero-mesh.jpg" alt="NutriMesh Shared Pot and Thalis" class="hero-img" id="hero-img">
+        
+        <div class="floating-mesh-chip chip-1">
+          <div class="chip-icon">🏋️</div>
+          <div class="chip-text">
+            <strong data-i18n="chip.rohan">Rohan (28, Strength)</strong>
+            <span data-i18n="chip.rohan_sub">2.0 Katoris • 28g Protein Target met</span>
+          </div>
+        </div>
+
+        <div class="floating-mesh-chip chip-2">
+          <div class="chip-icon">👵</div>
+          <div class="chip-text">
+            <strong data-i18n="chip.dadi">Dadi Ji (69, Low GI)</strong>
+            <span data-i18n="chip.dadi_sub">1.0 Katori • Sodium capped at 320mg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROBLEM VS SOLUTION (THE SHARED-POT DILEMMA)
+       ============================================================ -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="comp.tag">THE DILEMMA & THE BREAKTHROUGH</span>
+        <h2 class="section-title" data-i18n="comp.title">Why Conventional Calorie Trackers Fail Indian Kitchens</h2>
+        <p class="section-desc" data-i18n="comp.desc">
+          Tracking an Indian thali with Western fitness apps is frustrating because they assume you cook individual raw chicken breasts and weigh single portions.
+        </p>
+      </div>
+
+      <div class="comparison-grid">
+        <!-- Conventional Flawed Approach -->
+        <div class="comparison-card card-flawed">
+          <div class="comparison-badge badge-red" data-i18n="comp.old_badge">TRADITIONAL APPS</div>
+          <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;" data-i18n="comp.old_title">The Single-Plate Illusion</h3>
+          <p style="color: var(--muted-foreground); font-size: 0.95rem;">Designed for single people preparing individual meals on food scales.</p>
+          <ul class="comparison-list">
+            <li class="comparison-item">
+              <span class="icon-cross">✕</span>
+              <span data-i18n="comp.old_1">Demands raw weighing before cooking each person's dish separately.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-cross">✕</span>
+              <span data-i18n="comp.old_2">Cannot apportion nutrition when 4 family members eat from 1 dal kadai.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-cross">✕</span>
+              <span data-i18n="comp.old_3">Ignores Indian cooking realities: tadka, ghee, regional spices, and katori metrics.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-cross">✕</span>
+              <span data-i18n="comp.old_4">Forces fitness enthusiasts to alienate themselves from family dinners.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- The NutriMesh Household Mesh Solution -->
+        <div class="comparison-card card-mesh">
+          <div class="comparison-badge badge-green" data-i18n="comp.new_badge">NUTRIMESH SYSTEM</div>
+          <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;" data-i18n="comp.new_title">The Household Shared Mesh</h3>
+          <p style="color: var(--muted-foreground); font-size: 0.95rem;">Engineered around how real Indian families cook, share, and eat together.</p>
+          <ul class="comparison-list">
+            <li class="comparison-item">
+              <span class="icon-check">✓</span>
+              <span data-i18n="comp.new_1">Cook once for everyone: Log the entire pot in grams or katoris effortlessly.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-check">✓</span>
+              <span data-i18n="comp.new_2">Algorithmic apportionment distributes macros dynamically per family member.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-check">✓</span>
+              <span data-i18n="comp.new_3">Native 450+ Indian dish catalogue with authentic katori and thali conversions.</span>
+            </li>
+            <li class="comparison-item">
+              <span class="icon-check">✓</span>
+              <span data-i18n="comp.new_4">One-katori micro swaps solve individual protein gaps without separate cooking.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERACTIVE SHARED-POT SIMULATOR LAB
+       ============================================================ -->
+  <section class="section" id="simulator" style="background: var(--muted); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="sim.tag">INTERACTIVE LAB</span>
+        <h2 class="section-title" data-i18n="sim.title">Simulate Your Shared Pot to Individual Thalis</h2>
+        <p class="section-desc" data-i18n="sim.desc">
+          Pick a family dish, choose the total pot preparation, and adjust portion katoris to see how NutriMesh computes personal targets in real time.
+        </p>
+      </div>
+
+      <div class="simulator-container">
+        <div class="sim-header-row">
+          <div class="sim-selector-group">
+            <label for="sim-dish-select" style="font-weight: 600; font-size: 0.95rem;" data-i18n="sim.select_dish_label">Choose Family Pot:</label>
+            <select id="sim-dish-select" class="sim-select">
+              <option value="rajma">Rajma Masala (Punjab Style)</option>
+              <option value="daltadka">Moong & Toor Dal Tadka</option>
+              <option value="paneerbhurji">Amritsari Paneer Bhurji</option>
+              <option value="sambar">South Indian Drumstick Sambar</option>
+            </select>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent);">
+            <span class="pulse-dot"></span> <span data-i18n="sim.opt_status">Mesh Optimizer</span>: <strong data-i18n="sim.active">Active & Balanced</strong>
+          </div>
+        </div>
+
+        <!-- Pot Overview Telemetry -->
+        <div class="pot-overview-bar">
+          <div class="pot-stat-card">
+            <div class="pot-stat-label" data-i18n="sim.pot_volume">Total Pot Cooked</div>
+            <div class="pot-stat-val" id="pot-total-weight">720g (4.5 katoris)</div>
+          </div>
+          <div class="pot-stat-card">
+            <div class="pot-stat-label" data-i18n="sim.pot_calories">Total Pot Calories</div>
+            <div class="pot-stat-val" id="pot-total-cal">1008 kcal</div>
+          </div>
+          <div class="pot-stat-card">
+            <div class="pot-stat-label" data-i18n="sim.pot_protein">Total Pot Protein</div>
+            <div class="pot-stat-val" id="pot-total-pro">55 g</div>
+          </div>
+          <div class="pot-stat-card" style="border-left-color: var(--accent);">
+            <div class="pot-stat-label">Algorithmic Math</div>
+            <div class="pot-stat-val" style="font-size: 1.1rem; color: var(--accent);">Σ(portionᵢ·Pᵢ)</div>
+          </div>
+        </div>
+
+        <!-- Distributed Member Cards Grid -->
+        <div class="members-mesh-grid" id="members-mesh-grid">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SYSTEM ARCHITECTURE (6 PILLARS)
+       ============================================================ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="features.tag">SYSTEM ARCHITECTURE</span>
+        <h2 class="section-title" data-i18n="features.title">Engineered for Indian Kitchens & Multi-Gen Households</h2>
+        <p class="section-desc" data-i18n="features.desc">
+          Every algorithm, catalog entry, and UI interaction is crafted around the rhythm of Indian cooking and familial bonding.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Pillar 1 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-warm">🍲</div>
+            <h3 class="feature-title" data-i18n="f1.title">Shared-Pot Apportionment</h3>
+            <p class="feature-text" data-i18n="f1.desc">
+              Mathematical decomposition of a shared pot into precise personal macronutrient quotas using portion-weighted allocation.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ Zero separate cooking</div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-sage">🎙️</div>
+            <h3 class="feature-title" data-i18n="f2.title">Multimodal Frictionless Logger</h3>
+            <p class="feature-text" data-i18n="f2.desc">
+              Log meals the way you live — speak in Hindi or Tamil, snap a photo of the kadai, or type quick natural phrases.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ Voice, Photo & Text AI</div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-gold">📖</div>
+            <h3 class="feature-title" data-i18n="f3.title">450+ Verified Regional Catalogue</h3>
+            <p class="feature-text" data-i18n="f3.desc">
+              Complete nutritional breakdown from Theplas and Thalipeeth to Avial, Sambars, Dal Tadkas, and Khichdis.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ ICMR-NIN Calibrated</div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-rose">⚡</div>
+            <h3 class="feature-title" data-i18n="f4.title">LP Optimization Engine</h3>
+            <p class="feature-text" data-i18n="f4.desc">
+              Linear programming recommends simple 1-katori additions (e.g. extra curd or roasted chana) rather than cooking separate dinners.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ 1-Katori Micro Swaps</div>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-wood">🙏</div>
+            <h3 class="feature-title" data-i18n="f5.title">Vrat & Fasting Intelligence</h3>
+            <p class="feature-text" data-i18n="f5.desc">
+              Adaptive fasting presets for Navratri, Ekadashi, and Shravan with auto-adjusted macro targets and fasting-compliant recipes.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ Falahari Balance Engine</div>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="feature-card glass-card">
+          <div class="feature-top">
+            <div class="feature-icon-wrapper icon-blue">💰</div>
+            <h3 class="feature-title" data-i18n="f6.title">Pantry & Thali Budgeting</h3>
+            <p class="feature-text" data-i18n="f6.desc">
+              Track ingredient consumption, reduce kitchen waste, and optimize cost per gram of dietary protein across household groceries.
+            </p>
+          </div>
+          <div class="feature-metric-pill">✓ ₹ / gram protein tracking</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LIVE 450+ CATALOGUE EXPLORER
+       ============================================================ -->
+  <section class="section" id="catalogue" style="background: var(--muted); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="cat.tag">REGIONAL ARCHIVE</span>
+        <h2 class="section-title" data-i18n="cat.title">Explore 450+ Verified Indian Nutrition Profiles</h2>
+        <p class="section-desc" data-i18n="cat.desc">
+          Laboratory calibrated macro and micronutrient benchmarks standardized in familiar katoris, rotis, and thalis.
+        </p>
+      </div>
+
+      <div class="catalogue-container">
+        <div class="catalogue-controls">
+          <div class="search-box-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="catalogue-search-input" class="catalogue-search" placeholder="Search dishes e.g. Dal Makhani, Thepla, Sambar, Thalipeeth..." data-i18n-ph="cat.search_ph">
+          </div>
+
+          <div class="filter-tags-row">
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="North">North</button>
+            <button class="filter-chip" data-filter="South">South</button>
+            <button class="filter-chip" data-filter="West">West</button>
+            <button class="filter-chip" data-filter="East">East</button>
+            <button class="filter-chip" data-filter="high-protein">High Protein</button>
+            <button class="filter-chip" data-filter="fasting">Vrat / Fasting</button>
+          </div>
+        </div>
+
+        <div class="dishes-grid" id="dishes-grid">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOUSEHOLD STORIES / TESTIMONIALS
+       ============================================================ -->
+  <section class="section" id="stories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">COMMUNITY VOICES</span>
+        <h2 class="section-title">Tested in Real Multi-Gen Kitchens</h2>
+        <p class="section-desc">See how families across India stay aligned to their metabolic goals without friction at dinner.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card glass-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">
+            "My son is training for state athletics, my mother-in-law has borderline Type-2 diabetes, and I am watching calories. NutriMesh lets me cook one pot of Rajma and tells everyone exactly what to take."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MS</div>
+            <div>
+              <div class="author-name">Meenakshi Sharma</div>
+              <div class="author-city">New Delhi • 4-Member Household</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">
+            "We cook traditional South Indian thalis daily. Sambar, rasam, and poriyal were impossible to track on MyFitnessPal. The katori measurement and regional catalogue in NutriMesh is a lifesaver."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">KI</div>
+            <div>
+              <div class="author-name">Karthik Iyer</div>
+              <div class="author-city">Chennai • Joint Family</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">
+            "The 1-katori micro swap suggestions are brilliant. When the linear solver notices I'm 14g low on protein, it simply suggests adding 1 katori of sprouted moong usal to my dinner thali."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PP</div>
+            <div>
+              <div class="author-name">Pranav Patel</div>
+              <div class="author-city">Ahmedabad • Fitness & Fasting</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ ACCORDION
+       ============================================================ -->
+  <section class="section" id="faq" style="background: var(--muted); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="nav.faq">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="section-title">Everything You Need to Know</h2>
+        <p class="section-desc">Clarifying how the shared-pot mathematics, multi-language engine, and catalogue work.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item active">
+          <button class="faq-question">
+            <span>How does NutriMesh calculate macros from a single shared pot?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            When you log a shared pot (e.g. 4 katoris of Dal Makhani or 600g cooked Rajma), NutriMesh calculates the total pot caloric and nutrient density. As each member logs their allocated portion (e.g. 1.5 katoris vs 1 katori), the apportionment algorithm calculates their exact personal intake and checks it against their ICMR-NIN RDA targets.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do we need to weigh every raw ingredient separately?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            No! You can use our frictionless AI logger: simply take a quick photo of the kadai, speak naturally into the app in Hindi, Tamil, Telugu or English, or pick standard standardized recipes from our 450+ verified regional Indian catalogue.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is the 1-Katori Micro Swap recommendation?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Instead of forcing cooks to prepare a separate keto or high-protein dinner for one family member, our Linear Programming (LP) optimization engine recommends micro adjustments on the plate: for instance, adding 1 katori of sprouted moong, boiled chana, or curd to close the target gap effortlessly.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Does NutriMesh accommodate Vrat and Indian Fasting days?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Yes! NutriMesh features dedicated Vrat intelligence for Navratri, Ekadashi, and Shravan. It adjusts your nutritional targets and suggests compliant ingredients such as Sabudana, Kuttu, Singhara atta, Makhana, and Rock Salt (Sendha Namak).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does NutriMesh Flow connect to the live dashboard?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            The landing page connects seamlessly with the full NutriMesh Flow web application at <a href="https://nutri-mesh-flow.base44.app" target="_blank" style="color: var(--primary); text-decoration: underline;">nutri-mesh-flow.base44.app</a>, where household pods, pantry management, and live member tracking take place.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CALL TO ACTION BANNER
+       ============================================================ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 class="cta-title" data-i18n="cta.title">Ready to Nourish Your Entire Household?</h2>
+        <p class="cta-subtitle" data-i18n="cta.sub">
+          Join thousands of Indian families enjoying collective health without cooking separate meals.
+        </p>
+        <a href="https://nutri-mesh-flow.base44.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="cta-launch-btn" data-i18n="cta.btn">
+          Open NutriMesh Flow Dashboard ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMPREHENSIVE FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Info -->
+        <div>
+          <a href="#" class="brand">
+            <img src="assets/logo.png" alt="NutriMesh Logo" class="brand-icon">
+            <div class="brand-text">
+              <span class="brand-name">NutriMesh</span>
+              <span class="brand-badge">HOUSEHOLD FLOW</span>
+            </div>
+          </a>
+          <p class="footer-brand-desc" data-i18n="footer.desc">
+            NutriMesh is the household nutrition mesh platform bridging collective Indian cooking with individualized metabolic goals.
+          </p>
+          <div class="footer-badge-row">
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: var(--radius-sm);">ICMR-NIN 2024</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); background: var(--card); border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: var(--radius-sm);">8 Languages</span>
+          </div>
+        </div>
+
+        <!-- Pillar Navigation -->
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <ul class="footer-nav">
+            <li><a href="#problem">The Shared Pot</a></li>
+            <li><a href="#simulator">Pot Simulator</a></li>
+            <li><a href="#features">6 Pillars</a></li>
+            <li><a href="#catalogue">450+ Dishes</a></li>
+            <li><a href="https://nutri-mesh-flow.base44.app" target="_blank">NutriMesh Flow App</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div>
+          <div class="footer-col-title">Methodology</div>
+          <ul class="footer-nav">
+            <li><a href="#features">ICMR-NIN RDA Calibration</a></li>
+            <li><a href="#features">Linear Optimization Model</a></li>
+            <li><a href="#features">Vrat & Fasting Rules</a></li>
+            <li><a href="#catalogue">Indian Food Composition</a></li>
+            <li><a href="#faq">Household FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Languages & Direct Access -->
+        <div>
+          <div class="footer-col-title">Connect & Dashboard</div>
+          <ul class="footer-nav">
+            <li><a href="https://nutri-mesh-flow.base44.app" target="_blank" style="color: var(--primary); font-weight: 600;">Launch Live Dashboard ↗</a></li>
+            <li><a href="javascript:void(0)" onclick="setLanguage('en')">English (EN)</a></li>
+            <li><a href="javascript:void(0)" onclick="setLanguage('hi')">हिन्दी (HI)</a></li>
+            <li><a href="javascript:void(0)" onclick="setLanguage('mr')">मराठी (MR)</a></li>
+            <li><a href="javascript:void(0)" onclick="setLanguage('ta')">தமிழ் (TA)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footer.rights">© 2026 NutriMesh Flow. Calibrated to ICMR-NIN 2024 Guidelines. All rights reserved.</div>
+        <div class="footer-links-row">
+          <a href="#">Privacy Protocol</a>
+          <a href="#">Household Security</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Logic & Animations -->
+  <script src="app.js"></script>
+</body>
+</html>

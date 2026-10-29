@@ -1,0 +1,9 @@
+.nutrimesh-details-open{overflow:hidden}
+.nutrimesh-dialog{margin:auto;inset:0;padding:0;border:1px solid #29211e;background:#fafafa;color:#117025;width:min(1180px,calc(100vw - 48px));height:min(900px,calc(100dvh - 64px));max-width:none;max-height:none;box-shadow:0 24px 100px #002e0055}
+.nutrimesh-dialog::backdrop{background:#00310acc;backdrop-filter:blur(8px)}
+.nutrimesh-dialog>header{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #29211e;background:#e9e9e9;padding:12px 24px;font:13px/1.4 cinetype,monospace;letter-spacing:.06em;height:60px;box-sizing:border-box}
+.nutrimesh-dialog button{padding:8px 14px;border:1px solid #117025;border-radius:8px;background:transparent;color:inherit;cursor:pointer;font:inherit}
+.nutrimesh-dialog button:hover{background:#117025;color:#fafafa}
+.nutrimesh-dialog iframe{width:100%;height:calc(100% - 60px);border:0;display:block;background:#fafafa}
+.nutrimesh-dialog button:focus-visible{outline:2px solid #117025;outline-offset:3px}
+@media(max-width:600px){.nutrimesh-dialog{width:calc(100vw - 16px);height:calc(100dvh - 24px)}.nutrimesh-dialog>header{padding:10px 12px;font-size:10px}.nutrimesh-dialog button{font-size:12px;white-space:nowrap}}
